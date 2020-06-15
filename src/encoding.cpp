@@ -1,16 +1,18 @@
-// This is the CPP file you will edit and turn in.
-// Also remove these comments here and add your own, along with
-// comments on every function and on complex code sections.
-// TODO: remove this comment header
-
 #include "encoding.h"
 using namespace std;
-// TODO: include any other headers you need
 
-Map<int, int> buildFrequencyTable(istream& input) {
-    // TODO: implement this function
-    Map<int, int> freqTable;   // this is just a placeholder so it will compile
-    return freqTable;          // this is just a placeholder so it will compile
+Map<char, int> buildFrequencyTable(istream& input) {
+    Map<char, int> freqTable = unordered_map<char, int>();
+    while (input.peek() != EOF) {
+        char c;
+        input.get(c);
+        if (freqTable.find(c) != mymap.end()) {
+            freqTable[c]++;
+        }
+        else freqTable[c] = 1;
+    }  
+    freqTable[EOF] = 1;
+    return freqTable;
 }
 
 HuffmanNode* buildEncodingTree(const Map<int, int>& freqTable) {
