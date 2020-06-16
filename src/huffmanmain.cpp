@@ -34,7 +34,7 @@ static istream* openStringOrFileInputStream(string& data, bool& isFile, bool isB
 int main() {
     intro();
 
-    // these variables maintain state between steps 1-4
+    // these variables maintain state between steps 1 to 4
     string data;
     bool isFile = false;
     HuffmanNode* encodingTree = NULL;
