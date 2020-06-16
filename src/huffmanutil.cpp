@@ -13,86 +13,88 @@
  */
 
 #include "huffmanutil.h"
-#include "bitstream.h"
-#include "filelib.h"
-#include "simpio.h"
 using namespace std;
 
 string bitsToBytes(string text) {
-    istringbitstream input(text);
-    ostringstream out;
-    while (true) {
-        int bit = input.readBit();
-        if (input.fail()) {
-            break;
-        }
-        out.put(bit == 1 ? '1' : '0');
-    }
-    return out.str();
+//    istringbitstream input(text);
+//    ostringstream out;
+//    while (true) {
+//        int bit = input.readBit();
+//        if (input.fail()) {
+//            break;
+//        }
+//        out.put(bit == 1 ? '1' : '0');
+//    }
+//    return out.str();
+    return text;
 }
 
 string bytesToBits(string text) {
-    ostringbitstream out;
-    for (int i = 0; i < (int) text.length(); i++) {
-        out.writeBit(text[i] == '1' ? 1 : 0);
-    }
-    return out.str();
+//    ostringbitstream out;
+//    for (int i = 0; i < (int) text.length(); i++) {
+//        out.writeBit(text[i] == '1' ? 1 : 0);
+//    }
+//    return out.str();
+    return text;
 }
 
 bool confirmOverwrite(string filename) {
-    if (!fileExists(filename)) {
-        return true;
-    } else {
-        return getYesOrNo(filename + " already exists.  Overwrite? (y/n) ");
-    }
+//    if (!fileExists(filename)) {
+//        return true;
+//    } else {
+//        return getYesOrNo(filename + " already exists.  Overwrite? (y/n) ");
+//    }
+    return false;
 }
 
 void printBits(string text) {
-    istringbitstream input(text);
-    int i = 0;
-    while (true) {
-        i++;
-        int bit = input.readBit();
-        if (input.fail()) break;
-        cout << bit;
-        if (i > 0 && i % 8 == 0) {
-            cout << " ";
-        }
-        if (i > 0 && i % 64 == 0) {
-            cout << endl;
-        }
-    }
-    cout << endl;
+//    istringbitstream input(text);
+//    int i = 0;
+//    while (true) {
+//        i++;
+//        int bit = input.readBit();
+//        if (input.fail()) break;
+//        cout << bit;
+//        if (i > 0 && i % 8 == 0) {
+//            cout << " ";
+//        }
+//        if (i > 0 && i % 64 == 0) {
+//            cout << endl;
+//        }
+//    }
+//    cout << endl;
 }
 
 string promptForExistingFileName(string prompt) {
-    while (true) {
-        string filename = getLine(prompt);
-        if (fileExists(filename)) {
-            return filename;
-        } else {
-            cout << "That file does not exist; please try again." << endl;
-        }
-    }
+//    while (true) {
+//        string filename = getLine(prompt);
+//        if (fileExists(filename)) {
+//            return filename;
+//        } else {
+//            cout << "That file does not exist; please try again." << endl;
+//        }
+//    }
     return "";
 }
 
 string readEntireFileText(string filename) {
-    ifstream input;
-    input.open(filename.c_str());
-    return readEntireFileText(input);
+//    ifstream input;
+//    input.open(filename.c_str());
+//    return readEntireFileText(input);
+    return filename;
 }
 
 string readEntireFileText(istream& input) {
-    ostringstream out;
-    while (true) {
-        int ch = input.get();
-        if (input.fail()) {
-            break;
-        }
-        out << (char) ch;
-    }
-    return out.str();
+//    ostringstream out;
+//    while (true) {
+//        int ch = input.get();
+//        if (input.fail()) {
+//            break;
+//        }
+//        out << (char) ch;
+//    }
+//    return out.str();
+    return "";
 }
 
 /*
@@ -113,10 +115,10 @@ string toPrintableChar(int ch) {
         return "'\\0'";
     } else if (ch == ' ') {
         return "' '";
-    } else if (ch == (int) PSEUDO_EOF) {
-        return "EOF";
-    } else if (ch == (int) NOT_A_CHAR) {
-        return "NONE";
+//    } else if (ch == (int) PSEUDO_EOF) {
+//        return "EOF";
+//    } else if (ch == (int) NOT_A_CHAR) {
+//        return "NONE";
     } else if (!isgraph(ch)) {
         return "???";
     } else {

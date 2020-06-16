@@ -56,12 +56,13 @@ static void printHuffmanNode(ostream& out, const HuffmanNode& node, bool showAdd
     }
     out << "{";
 
-    if (node.character == NOT_A_CHAR) {
-        out << "NOT, ";
-    } else {
+
+//    if (node.character == NOT_A_CHAR) {
+//        out << "NOT, ";
+//    } else {
         out << toPrintableChar(node.character)
             << " (" << node.character << "), ";
-    }
+//    }
     out << "count=" << node.count;
 
     if (showAddress) {
