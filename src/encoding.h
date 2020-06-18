@@ -23,9 +23,9 @@ using namespace std;
  * See huffmanencoding.cpp for documentation of these functions
  * (which you are supposed to write, based on the spec).
  */
-map<char, int> buildFrequencyTable(istream &input);
+map<int, int> buildFrequencyTable(istream &input);
 HuffmanNode *buildEncodingTree(const map<int, int> &freqTable);
-map<char, string> buildEncodingMap(HuffmanNode *encodingTree);
+map<int, string> buildEncodingMap(HuffmanNode *encodingTree);
 // void encodeData(istream &input, const map<int, string> &encodingMap, obitstream &output);
 // void decodeData(ibitstream &input, HuffmanNode *encodingTree, ostream &output);
 // void compress(istream &input, obitstream &output);
