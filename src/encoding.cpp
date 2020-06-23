@@ -41,16 +41,46 @@ HuffmanNode *buildEncodingTree(const map<int, int> &freqTable)
         HuffmanNode n = HuffmanNode(-1, t1.count + t2.count, &t1, &t2);
         pq.push(n);
     }
-    HuffmanNode ans = pq.top();
+    static HuffmanNode ans = pq.top();
     return &ans;
 }
 
-map<int, string> buildEncodingMap(HuffmanNode *encodingTree)
+string convertVector(int size, int seq) {
+    char arr[size+1];
+    arr[size] = '\0';
+    for (int i = size-1; i >=0; i--) {
+        arr[i] = seq%2;
+        seq/=2;
+    }
+    return arr;
+}
+
+vector<bool>& convertInts(int size, int seq) {
+    vector<bool> arr(size);
+    for (int i = size-1; i >=0; i--) {
+        arr[i] = seq%2;
+        seq/=2;
+    }
+    return arr;
+}
+
+void dfs(HuffmanNode *Tree, int size, int seq, map<int, vector<bool>> &encodingMap) {
+    if (Tree->isLeaf()) {
+        encodingMap[Tree->character] = convertInts(size, seq);
+    }
+    else {
+        dfs(Tree->one, size + 1, (seq<<1) + 1, encodingMap);
+        dfs(Tree->zero, size + 1, seq<<1, encodingMap);
+    }
+}
+
+map<int, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree)
 {
-    // TODO: implement this function
-    map<int, string> encodingMap;
+    map<int, vector<bool>> encodingMap;
+    dfs(encodingTree, 0, 0, encodingMap);
     return encodingMap;
 }
+
 
 // void encodeData(istream &input, const map<int, string> &encodingMap, obitstream &output)
 // {
