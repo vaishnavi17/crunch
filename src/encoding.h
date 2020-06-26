@@ -13,23 +13,24 @@
 #ifndef _encoding_h
 #define _encoding_h
 
-#include <map>
+#include <unordered_map>
 #include <iostream>
 #include <string>
 #include "HuffmanNode.h"
+#include "chunkwriter.h"
 using namespace std;
 
 /*
  * See huffmanencoding.cpp for documentation of these functions
  * (which you are supposed to write, based on the spec).
  */
-map<int, int> buildFrequencyTable(istream &input);
-HuffmanNode *buildEncodingTree(const map<int, int> &freqTable);
-map<int, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree);
-// void encodeData(istream &input, const map<int, string> &encodingMap, obitstream &output);
+unordered_map<unsigned char, int> buildFrequencyTable(istream &input);
+HuffmanNode *buildEncodingTree(const unordered_map<unsigned char, int> &freqTable);
+unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree);
+void encodeData(string input_file, string output_file);
 // void decodeData(ibitstream &input, HuffmanNode *encodingTree, ostream &output);
 // void compress(istream &input, obitstream &output);
 // void decompress(ibitstream &input, ostream &output);
-// void freeTree(HuffmanNode *node);
+ void freeTree(HuffmanNode *node);
 
 #endif
