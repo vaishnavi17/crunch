@@ -9,14 +9,20 @@
 #include <iomanip>
 #include <sstream>
 #include <iostream>
+#include <ostream>
 #include <string>
 #include <ostream>
+#include <fstream>
 using namespace std;
 
 class chunkwriter {
+    unsigned char primary_buffer;
+    short space;
+    ofstream out;
     public:
-        chunkwriter(ostream &output);
+        chunkwriter(string output_file);
         void push(vector<bool>& code);
+        void close();
 };
 
 
