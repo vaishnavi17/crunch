@@ -18,35 +18,38 @@
 #include <string>
 #include "HuffmanNode.h"
 #include "encoding.h"
+#include <vector>
 #include "huffmanutil.h"
 using namespace std;
 
-const bool SHOW_TREE_ADDRESSES = false;   // set to true to debug tree pointer issues
-const string DEFAULT_COMPRESSED_FILE_EXTENSION = ".huf";
-const string DEFAULT_DECOMPRESSED_FILE_EXTENSION = ".txt";
+//const bool SHOW_TREE_ADDRESSES = false;   // set to true to debug tree pointer issues
+//const string DEFAULT_COMPRESSED_FILE_EXTENSION = ".huf";
+//const string DEFAULT_DECOMPRESSED_FILE_EXTENSION = ".txt";
 
 // function prototype declarations; see definitions below for documentation
-static void intro();
-static string menu();
-static istream* openInputStream(string data, bool isFile, bool isBits = false);
-static istream* openStringOrFileInputStream(string& data, bool& isFile, bool isBits = false);
+//static void intro();
+//static string menu();
+//static istream* openInputStream(string data, bool isFile, bool isBits = false);
+//static istream* openStringOrFileInputStream(string& data, bool& isFile, bool isBits = false);
 
 int main() {
-    intro();
-
+    encodeData("res/ababcab.txt", "res/out.huff");
+    encodeData("res/hellokitty.bmp", "res/hellokitty.huff");
+    encodeData("res/dictionary.txt", "res/dictionary.huff");
+//    intro();
     // these variables maintain state between steps 1 to 4
-    string data;
-    bool isFile = false;
-    HuffmanNode* encodingTree = NULL;
-    map<int, int> freqTable;
-    map<int, string> encodingMap;
-
-    // prompt user for options repeatedly
-    while (true) {
-        string choice = menu();
-        if (choice == "Q") {
-            break;
-        }
+//    string data;
+//    bool isFile = false;
+//    HuffmanNode* encodingTree = NULL;
+//    unordered_map<int, int> freqTable;
+//    unordered_map<int, string> encodingMap;
+//
+//    // prompt user for options repeatedly
+//    while (true) {
+//        string choice = menu();
+//        if (choice == "Q") {
+//            break;
+//        }
 //        else if (choice == "1") {
 //            test_buildFrequencyTable(freqTable, data, isFile);
 //        } else if (choice == "2") {
@@ -70,11 +73,11 @@ int main() {
 //        } else if (choice == "F") {
 //            test_freeTree(encodingTree);
 //            encodingTree = NULL;
-//        }
-    }
-
-    cout << "Exiting." << endl;
-    return 0;
+////        }
+//    }
+//
+//    cout << "Exiting." << endl;
+//    return 0;
 }
 
 /*

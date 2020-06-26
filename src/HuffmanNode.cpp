@@ -18,7 +18,7 @@ using namespace std;
 
 static void printHuffmanNode(ostream& out, const HuffmanNode& node, bool showAddress = false);
 
-HuffmanNode::HuffmanNode(int character, int count, HuffmanNode* zero, HuffmanNode* one) {
+HuffmanNode::HuffmanNode(unsigned char character, int count, HuffmanNode* zero, HuffmanNode* one) {
     this->character = character;
     this->count = count;
     this->zero = zero;

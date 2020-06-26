@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(src)
 
 add_executable(huffman_coding
+        src/huffmanmain.cpp
         src/encoding.cpp
         src/encoding.h
-        src/huffmanmain.cpp
         src/HuffmanNode.cpp
         src/HuffmanNode.h
         src/huffmanutil.cpp
