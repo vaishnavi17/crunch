@@ -13,6 +13,7 @@
 #include <string>
 #include <ostream>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 class chunkwriter {
