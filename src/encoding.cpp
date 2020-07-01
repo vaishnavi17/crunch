@@ -44,15 +44,6 @@ HuffmanNode *buildEncodingTree(const unordered_map<unsigned char, int> &freqTabl
     return pq.top();
 }
 
-string convertVector(int size, int seq) {
-    char arr[size+1];
-    arr[size] = '\0';
-    for (int i = size-1; i >=0; i--) {
-        arr[i] = seq%2;
-        seq/=2;
-    }
-    return arr;
-}
 string tostr(vector<bool>& vec) {
     string ans = "";
     for (bool i : vec) {
@@ -70,33 +61,60 @@ vector<bool> convertInts(int size, int seq) {
     return arr;
 }
 
-void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vector<bool>> &encodingMap) {
+void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vector<bool>> &encodingMap,
+        unordered_map<unsigned char, unsigned char> &headerMap) {
     if (Tree->isLeaf()) {
-        encodingMap[Tree->character] = convertInts(size, seq);
+        auto c = convertInts(size, seq);
+        encodingMap[Tree->character] = c;
+        int pos = 0;
+        for (bool i : c) {
+            pos = (pos<<1) + (i ? 2 : 1);
+        }
+        headerMap[pos] = Tree->character;
+//        cout << c.size() << '\n';
     }
     else {
-        dfs(Tree->one, size + 1, (seq<<1) + 1, encodingMap);
-        dfs(Tree->zero, size + 1, seq<<1, encodingMap);
+        dfs(Tree->one, size + 1, (seq<<1) + 1, encodingMap, headerMap);
+        dfs(Tree->zero, size + 1, seq<<1, encodingMap, headerMap);
     }
 }
 
-unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree)
+unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree, unordered_map<unsigned char, unsigned char> &headerMap)
 {
     unordered_map<unsigned char, vector<bool>> encodingMap;
-    dfs(encodingTree, 0, 0, encodingMap);
+    dfs(encodingTree, 0, 0, encodingMap, headerMap);
     return encodingMap;
 }
 
+void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& headerMap) {
+    out.pushByte(headerMap.size());
+    for (auto i : headerMap) {
+        out.pushByte(i.first);
+        out.pushByte(i.second);
+    }
+}
 
- void encodeData(string input_file, string output_file)
+ void compress(string input_file, string output_file)
  {
      ifstream inp;
      inp.open(input_file, ios::in);
      HuffmanNode* tree = buildEncodingTree(buildFrequencyTable(inp));
-     auto encodingMap = buildEncodingMap(tree);
+     unordered_map<unsigned char, unsigned char> headerMap;
+     auto encodingMap = buildEncodingMap(tree, headerMap);
+
+//     for (auto i : encodingMap) {
+//         cout << i.first << ' ' << tostr(i.second) << '\n';
+//     }
+
      inp.close();
 
+//     for (auto i : headerMap) {
+//         cout << +i.first << ' ' << i.second << '\n';
+//     }
+
+
      chunkwriter out = chunkwriter(output_file);
+     writeHeader(out, headerMap);
      inp.open(input_file, ios::in);
      while (inp.peek() != EOF)
      {
@@ -116,10 +134,6 @@ unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodin
 //     // TODO: implement this function
 // }
 
-// void compress(istream &input, obitstream &output)
-// {
-//     // TODO: implement this function
-// }
 
 // void decompress(ibitstream &input, ostream &output)
 // {

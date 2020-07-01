@@ -24,7 +24,8 @@ using namespace std;
 
 
 int main() {
-    encodeData("res/ababcab.txt", "res/out.huff");
-    encodeData("res/hellokitty.bmp", "res/hellokitty.huff");
-    encodeData("res/dictionary.txt", "res/dictionary.huff");
+    compress("res/ababcab.txt", "res/out.huff");
+    compress("res/hellokitty.bmp", "res/hellokitty.huff");
+    compress("res/dictionary.txt", "res/dictionary.huff");
+    compress("res/bender.jpg", "res/bender.huff");
 }

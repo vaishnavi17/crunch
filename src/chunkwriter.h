@@ -23,6 +23,7 @@ class chunkwriter {
     public:
         chunkwriter(string output_file);
         void push(vector<bool>& code);
+        void pushByte(unsigned char b);
         void close();
 };
 

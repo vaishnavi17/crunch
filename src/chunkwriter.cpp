@@ -26,6 +26,10 @@ void chunkwriter::push(vector<bool> &code) {
     }
 }
 
+void chunkwriter::pushByte(unsigned char b) {
+    out.put(b);
+}
+
 void chunkwriter::close() {
     out.put(primary_buffer);
     out.close();
