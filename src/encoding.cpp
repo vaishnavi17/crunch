@@ -6,6 +6,13 @@
 
 using namespace std;
 
+void print_state (const std::ios& stream) {
+    std::cout << " good()=" << stream.good();
+    std::cout << " eof()=" << stream.eof();
+    std::cout << " fail()=" << stream.fail();
+    std::cout << " bad()=" << stream.bad() << '\n';
+}
+
 unordered_map<unsigned char, int> buildFrequencyTable(istream &input)
 {
     unordered_map<unsigned char, int> freqTable = unordered_map<unsigned char, int>();
@@ -70,6 +77,8 @@ void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vect
         for (bool i : c) {
             pos = (pos<<1) + (i ? 2 : 1);
         }
+        //cout << "pos: " << pos << endl;
+        //cout << "char: " << Tree->character << endl;
         headerMap[pos] = Tree->character;
 //        cout << c.size() << '\n';
     }
@@ -89,6 +98,8 @@ unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodin
 void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& headerMap) {
     out.pushByte(headerMap.size());
     for (auto i : headerMap) {
+        //cout << "pos: " << +(i.first) << endl;
+        //cout << "char: " << i.second << endl;
         out.pushByte(i.first);
         out.pushByte(i.second);
     }
@@ -98,6 +109,7 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
  {
      ifstream inp;
      inp.open(input_file, ios::in);
+//   print_state(inp);
      HuffmanNode* tree = buildEncodingTree(buildFrequencyTable(inp));
      unordered_map<unsigned char, unsigned char> headerMap;
      auto encodingMap = buildEncodingMap(tree, headerMap);
@@ -129,16 +141,41 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
 
  }
 
-// void decodeData(ibitstream &input, HuffmanNode *encodingTree, ostream &output)
-// {
-//     // TODO: implement this function
-// }
 
+ void decompress(string input_file, string output_file)
+ {
+     ifstream inp;
+     inp.open(input_file, ios::in);
+     print_state(inp);
+     //inp.seekg (0, inp.end);
+     //int a_size = inp.tellg();
+     //inp.seekg (0, inp.beg);
+     unsigned char size;
+     size = inp.get();
+     cout << "size: " << +size << endl;
+     //cout << "actual size: " << a_size << endl;
+     unordered_map<unsigned char, unsigned char> headerMap;
+     char * mapArray = new char [2*(+size)];
+     inp.read(mapArray, 2*(+size));
+     cout << "bytes read: " << inp.gcount() << endl;
+     ofstream out;
+     out.open(output_file);
+     unsigned char pos = 0;
+     char c;
+     while (inp.get(c))
+     {
+         for (int i = 7; i >= 0; i--)
+         {
+             pos = (pos<<1) + (((c >> i) & 1 == 1) ? 2 : 1);
+             if(headerMap.count(pos) == 1)
+             {
+                out.put(headerMap[pos]);
+                pos = 0;
+             }
+         }
+     }
 
-// void decompress(ibitstream &input, ostream &output)
-// {
-//     // TODO: implement this function
-// }
+ }
 
 void freeTree(HuffmanNode *node)
 {

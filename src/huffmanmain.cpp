@@ -24,8 +24,12 @@ using namespace std;
 
 
 int main() {
-    compress("res/ababcab.txt", "res/out.huff");
-    compress("res/hellokitty.bmp", "res/hellokitty.huff");
-    compress("res/dictionary.txt", "res/dictionary.huff");
-    compress("res/bender.jpg", "res/bender.huff");
+    compress(R"(C:\Users\fateh\Documents\CS\huffman-coding\res\short.txt)",
+            R"(C:\Users\fateh\Documents\CS\huffman-coding\res\short.huff)");
+    decompress(R"(C:\Users\fateh\Documents\CS\huffman-coding\res\short.huff)",
+             R"(C:\Users\fateh\Documents\CS\huffman-coding\res\dshort.txt)");
+   // compress("res/ababcab.txt", "res/out.huff");
+   // compress("res/hellokitty.bmp", "res/hellokitty.huff");
+   // compress("res/dictionary.txt", "res/dictionary.huff");
+   // compress("res/bender.jpg", "res/bender.huff");
 }

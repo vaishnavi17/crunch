@@ -30,7 +30,7 @@ unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodin
 void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& headerMap);
 void compress(string input_file, string output_file);
 // void decodeData(ibitstream &input, HuffmanNode *encodingTree, ostream &output);
-// void decompress(ibitstream &input, ostream &output);
+void decompress(string input_file, string output_file);
  void freeTree(HuffmanNode *node);
 
 #endif
