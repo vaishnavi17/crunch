@@ -147,17 +147,15 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
      ifstream inp;
      inp.open(input_file, ios::in);
      print_state(inp);
-     //inp.seekg (0, inp.end);
-     //int a_size = inp.tellg();
-     //inp.seekg (0, inp.beg);
      unsigned char size;
      size = inp.get();
      cout << "size: " << +size << endl;
-     //cout << "actual size: " << a_size << endl;
      unordered_map<unsigned char, unsigned char> headerMap;
-     char * mapArray = new char [2*(+size)];
-     inp.read(mapArray, 2*(+size));
-     cout << "bytes read: " << inp.gcount() << endl;
+     for(int i = 0; i < size; i++){
+         unsigned char pos = inp.get();
+         unsigned char c = inp.get();
+         headerMap[pos] = c;
+     }
      ofstream out;
      out.open(output_file);
      unsigned char pos = 0;
