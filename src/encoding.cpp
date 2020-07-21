@@ -96,12 +96,14 @@ unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodin
 }
 
 void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& headerMap) {
-    out.pushByte(headerMap.size());
+    out.pushByte(headerMap.size()-1);
     for (auto i : headerMap) {
         //cout << "pos: " << +(i.first) << endl;
         //cout << "char: " << i.second << endl;
-        out.pushByte(i.first);
-        out.pushByte(i.second);
+        if (i.second != 255) {
+            out.pushByte(i.first);
+            out.pushByte(i.second);
+        }
     }
 }
 
@@ -114,10 +116,11 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
      unordered_map<unsigned char, unsigned char> headerMap;
      auto encodingMap = buildEncodingMap(tree, headerMap);
 
-//     for (auto i : encodingMap) {
-//         cout << i.first << ' ' << tostr(i.second) << '\n';
-//     }
-
+     for (auto i : encodingMap) {
+         cout << i.first << ' ' << tostr(i.second) << '\n';
+     }
+     cout << encodingMap.size() << '\n';
+     cout << headerMap.size() << '\n';
      inp.close();
 
 //     for (auto i : headerMap) {
@@ -132,6 +135,7 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
      {
          unsigned char c;
          c = inp.get();
+//         cout << c << '\n' << tostr(encodingMap.at(c)) << '\n';
          out.push(encodingMap.at(c));
      }
      out.push(encodingMap.at(EOF));
@@ -164,7 +168,7 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
      {
          for (int i = 7; i >= 0; i--)
          {
-             pos = (pos<<1) + (((c >> i) & 1 == 1) ? 2 : 1);
+             pos = (pos<<1) + ((((c >> i) & 1) == 1) ? 2 : 1);
              if(headerMap.count(pos) == 1)
              {
                 out.put(headerMap[pos]);
@@ -172,6 +176,8 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
              }
          }
      }
+     inp.close();
+     out.close();
 
  }
 
