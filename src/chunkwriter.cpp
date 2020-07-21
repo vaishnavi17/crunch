@@ -11,19 +11,49 @@ chunkwriter::chunkwriter(string output_file) {
     space = 8;
 }
 
+
 void chunkwriter::push(vector<bool> &code) {
+    int n = code.size();
     unsigned char mask = 0;
-    for (bool i : code) {
-        mask = (mask << 1) + (i ? 1 : 0);
+    for (int i = 0; i < min(n, space); i++) {
+        mask = (mask << 1) + (code[i] ? 1 : 0);
     }
-    if (code.size() >= space) {
-        out.put(primary_buffer + (mask >> (code.size() - space)));
-        primary_buffer = mask % (1 << (code.size() - space));
-        space += 8 - code.size();
+
+    if (n >= space) {
+        out.put(primary_buffer + mask);
+        primary_buffer = 0;
+        space = 8;
     } else {
-        primary_buffer += mask << (space - code.size());
-        space -= code.size();
+        primary_buffer += mask << (space - n);
+        space -= n;
     }
+    int done = space;
+    while (done < n) {
+        mask = 0;
+        for (int j = done ; j < min(done + 8, n); j++) {
+            mask = (mask << 1) + (code[j] ? 1 : 0);
+        }
+        if (done + 8 <= n) {
+            out.put(mask);
+        }
+        else {
+            primary_buffer += mask << (8 + done - n);
+            space -= (n - done);
+        }
+        done +=8;
+    }
+
+//    char t[8];
+//    auto temp = primary_buffer;
+//    for (int i = 7; i>=0; i--) {
+//        if (temp % 2 == 1) t[i] = '1';
+//        else t[i] = '0';
+//        temp/=2;
+//    }
+//    for (char i : t) {
+//        cout << i;
+//    }
+//    cout << '\n';
 }
 
 void chunkwriter::pushByte(unsigned char b) {

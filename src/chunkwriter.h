@@ -18,7 +18,7 @@ using namespace std;
 
 class chunkwriter {
     unsigned char primary_buffer;
-    short space;
+    int space;
     ofstream out;
     public:
         chunkwriter(string output_file);
