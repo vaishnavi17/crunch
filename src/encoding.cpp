@@ -151,27 +151,66 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
      size = inp.get();
      cout << "size: " << +size << endl;
      unordered_map<unsigned char, unsigned char> headerMap;
-     for(int i = 0; i < size; i++){
-         unsigned char pos = inp.get();
-         unsigned char c = inp.get();
-         headerMap[pos] = c;
-     }
-     ofstream out;
-     out.open(output_file);
-     unsigned char pos = 0;
      char c;
-     while (inp.get(c))
+     unsigned char ch = 0;
+     unsigned char code = 0;
+     int buffer_size = 0;
+     for (int i = 0; i < size; i++)
      {
-         for (int i = 7; i >= 0; i--)
+         inp.get(c);
+         int j = 7;
+         while (buffer_size < 8)
          {
-             pos = (pos<<1) + (((c >> i) & 1 == 1) ? 2 : 1);
-             if(headerMap.count(pos) == 1)
-             {
-                out.put(headerMap[pos]);
-                pos = 0;
+             ch = (ch << 1) + ((c >> j) & 1);
+             buffer_size++;
+             j--;
+         }
+         buffer_size = 0;
+         int size = 0;
+         while (j >= 0)
+         {
+             size = (size << 1) + ((c >> j) & 1);
+             buffer_size++;
+             j--;
+         }
+         inp.get(c);
+         j = 8;
+         while (buffer_size < 8){
+             size = (size << 1) + ((c >> j) & 1);
+             buffer_size++;
+             j--;
+         }
+         if (size + buffer_size <= 8){
+             for (int k = 0; k < size; k++){
+                 code = (code << 1) + ((c >> j) & 1);
+                 buffer_size++;
+                 j--;
+             }
+             while (j >= 0) {
+                 ch = (ch << 1) + ((c >> j) & 1);
+                 buffer_size++;
+                 j--;
+             }
+         } else {
+             while (j >= 0) {
+                 code = (code << 1) + ((c >> j) & 1);
+                 size--;
+                 j--;
+             }
+             buffer_size = 0;
+             j = 8;
+             for (int k = 0; k < size; k++){
+                 code = (code << 1) + ((c >> j) & 1);
+                 j--;
+             }
+             while (j >= 0) {
+                 ch = (ch << 1) + ((c >> j) & 1);
+                 j--;
              }
          }
      }
+     ofstream out;
+     out.open(output_file);
 
  }
 
