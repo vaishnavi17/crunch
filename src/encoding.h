@@ -27,7 +27,7 @@ using namespace std;
 unordered_map<unsigned char, int> buildFrequencyTable(istream &input);
 HuffmanNode *buildEncodingTree(const unordered_map<unsigned char, int> &freqTable);
 unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree);
-void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& headerMap);
+void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& encodingMap);
 void compress(string input_file, string output_file);
 // void decodeData(ibitstream &input, HuffmanNode *encodingTree, ostream &output);
 void decompress(string input_file, string output_file);

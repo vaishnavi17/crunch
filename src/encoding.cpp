@@ -68,40 +68,32 @@ vector<bool> convertInts(int size, int seq) {
     return arr;
 }
 
-void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vector<bool>> &encodingMap,
-        unordered_map<unsigned char, unsigned char> &headerMap) {
+void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vector<bool>> &encodingMap) {
     if (Tree->isLeaf()) {
         auto c = convertInts(size, seq);
         encodingMap[Tree->character] = c;
-        int pos = 0;
-        for (bool i : c) {
-            pos = (pos<<1) + (i ? 2 : 1);
-        }
-        //cout << "pos: " << pos << endl;
-        //cout << "char: " << Tree->character << endl;
-        headerMap[pos] = Tree->character;
-//        cout << c.size() << '\n';
     }
     else {
-        dfs(Tree->one, size + 1, (seq<<1) + 1, encodingMap, headerMap);
-        dfs(Tree->zero, size + 1, seq<<1, encodingMap, headerMap);
+        dfs(Tree->one, size + 1, (seq<<1) + 1, encodingMap);
+        dfs(Tree->zero, size + 1, seq<<1, encodingMap);
     }
 }
 
-unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree, unordered_map<unsigned char, unsigned char> &headerMap)
+unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree)
 {
     unordered_map<unsigned char, vector<bool>> encodingMap;
-    dfs(encodingTree, 0, 0, encodingMap, headerMap);
+    dfs(encodingTree, 0, 0, encodingMap);
     return encodingMap;
 }
 
-void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& headerMap) {
-    out.pushByte(headerMap.size());
-    for (auto i : headerMap) {
-        //cout << "pos: " << +(i.first) << endl;
-        //cout << "char: " << i.second << endl;
-        out.pushByte(i.first);
-        out.pushByte(i.second);
+void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& encodingMap) {
+    out.pushByte(encodingMap.size()-1);
+    for (auto i : encodingMap) {
+        if (i.first != 255) {
+            out.pushByte(i.first);
+            out.pushByte(i.second.size());
+            out.push(i.second);
+        }
     }
 }
 
@@ -111,22 +103,15 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
      inp.open(input_file, ios::in);
 //   print_state(inp);
      HuffmanNode* tree = buildEncodingTree(buildFrequencyTable(inp));
-     unordered_map<unsigned char, unsigned char> headerMap;
-     auto encodingMap = buildEncodingMap(tree, headerMap);
+     auto encodingMap = buildEncodingMap(tree);
 
-//     for (auto i : encodingMap) {
-//         cout << i.first << ' ' << tostr(i.second) << '\n';
-//     }
-
+     for (auto i : encodingMap) {
+         cout << i.first << ' ' << tostr(i.second) << '\n';
+     }
      inp.close();
 
-//     for (auto i : headerMap) {
-//         cout << +i.first << ' ' << i.second << '\n';
-//     }
-
-
      chunkwriter out = chunkwriter(output_file);
-     writeHeader(out, headerMap);
+     writeHeader(out, encodingMap);
      inp.open(input_file, ios::in);
      while (inp.peek() != EOF)
      {
@@ -138,7 +123,6 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, unsigned char>& 
      inp.close();
      out.close();
      freeTree(tree);
-
  }
 
 
