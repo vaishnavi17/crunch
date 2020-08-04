@@ -18,6 +18,7 @@
 #include <string>
 #include "HuffmanNode.h"
 #include "chunkwriter.h"
+#include "chunkreader.h"
 using namespace std;
 
 /*

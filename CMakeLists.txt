@@ -12,4 +12,5 @@ add_executable(huffman_coding
         src/HuffmanNode.cpp
         src/HuffmanNode.h
         src/huffmanutil.cpp
-        src/huffmanutil.h src/chunkwriter.cpp src/chunkwriter.h)
+        src/huffmanutil.h src/chunkwriter.cpp src/chunkwriter.h
+        src/chunkreader.cpp src/chunkreader.h)

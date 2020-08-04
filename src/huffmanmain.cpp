@@ -29,14 +29,14 @@ int main() {
 //    decompress(R"(C:\Users\fateh\Documents\CS\huffman-coding\res\short.huff)",
 //             R"(C:\Users\fateh\Documents\CS\huffman-coding\res\dshort.txt)");
     compress("res/ababcab.txt", "res/out.huff");
-//    decompress("res/out.huff", "res/decomp.txt");
+    decompress("res/out.huff", "res/decomp.txt");
 //    compress("res/fibonacci.txt", "res/fibonacci.huff");
 //    decompress("res/fibonacci.huff", "res/fibonacci_d.txt");
 //    compress("res/dictionary.txt", "res/dictionary.huff");
 //    decompress("res/dictionary.huff", "res/d_dictionary.txt");
 //    compress("res/hellokitty.bmp", "res/hello.huff");
 //    decompress("res/hello.huff", "res/d_hellokitty.bmp");
-   // compress("res/dictionary.txt", "res/dictionary.huff");
+//    compress("res/dictionary.txt", "res/dictionary.huff");
    // compress("res/bender.jpg", "res/bender.huff");
 
 //   1 byte indicating number of encodings to come

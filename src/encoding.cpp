@@ -128,73 +128,27 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& e
 
  void decompress(string input_file, string output_file)
  {
-     ifstream inp;
-     inp.open(input_file, ios::in);
-     print_state(inp);
-     unsigned char size;
-     size = inp.get();
-     cout << "size: " << +size << endl;
-     unordered_map<unsigned char, unsigned char> headerMap;
-     char c;
-     unsigned char ch = 0;
-     unsigned char code = 0;
-     int buffer_size = 0;
-     for (int i = 0; i < size; i++)
-     {
-         inp.get(c);
-         int j = 7;
-         while (buffer_size < 8)
-         {
-             ch = (ch << 1) + ((c >> j) & 1);
-             buffer_size++;
-             j--;
-         }
-         buffer_size = 0;
-         int size = 0;
-         while (j >= 0)
-         {
-             size = (size << 1) + ((c >> j) & 1);
-             buffer_size++;
-             j--;
-         }
-         inp.get(c);
-         j = 8;
-         while (buffer_size < 8){
-             size = (size << 1) + ((c >> j) & 1);
-             buffer_size++;
-             j--;
-         }
-         if (size + buffer_size <= 8){
-             for (int k = 0; k < size; k++){
-                 code = (code << 1) + ((c >> j) & 1);
-                 buffer_size++;
-                 j--;
-             }
-             while (j >= 0) {
-                 ch = (ch << 1) + ((c >> j) & 1);
-                 buffer_size++;
-                 j--;
-             }
-         } else {
-             while (j >= 0) {
-                 code = (code << 1) + ((c >> j) & 1);
-                 size--;
-                 j--;
-             }
-             buffer_size = 0;
-             j = 8;
-             for (int k = 0; k < size; k++){
-                 code = (code << 1) + ((c >> j) & 1);
-                 j--;
-             }
-             while (j >= 0) {
-                 ch = (ch << 1) + ((c >> j) & 1);
-                 j--;
-             }
-         }
+
+     chunkreader inp = chunkreader(input_file);
+     unsigned char num = inp.getChar(8);
+     cout << "size: " << +num << endl;
+     unordered_map<unsigned char, vector<bool>> encodingMap;
+     char character;
+     unsigned char size = 0;
+     vector<bool> code;
+     for (int i = 0; i < num; i++) {
+         character = inp.getChar(8);
+         size = inp.getChar(8);
+         code = inp.get(size);
+         encodingMap[character] = code;
      }
-     ofstream out;
-     out.open(output_file);
+
+     for (auto i : encodingMap) {
+         cout << i.first << '\n' << tostr(i.second) << "\n\n";
+     }
+     inp.close();
+//     ofstream out;
+//     out.open(output_file);
 
  }
 
