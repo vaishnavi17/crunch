@@ -23,6 +23,8 @@ public:
     chunkreader(string input_file);
     vector<bool> get(int n);
     unsigned char getChar(int n);
+    bool getBit();
+    bool hasLeft();
     void close();
 };
 

@@ -37,6 +37,14 @@ unsigned char chunkreader::getChar(int n) {
     return ans;
 }
 
+bool chunkreader::getBit() {
+    return get(1)[0];
+}
+
+bool chunkreader::hasLeft() {
+    return !in.eof();
+}
+
 void chunkreader::close() {
     in.close();
 }

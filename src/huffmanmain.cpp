@@ -28,14 +28,25 @@ int main() {
 //            R"(C:\Users\fateh\Documents\CS\huffman-coding\res\short.huff)");
 //    decompress(R"(C:\Users\fateh\Documents\CS\huffman-coding\res\short.huff)",
 //             R"(C:\Users\fateh\Documents\CS\huffman-coding\res\dshort.txt)");
-    compress("res/ababcab.txt", "res/out.huff");
-    decompress("res/out.huff", "res/decomp.txt");
-//    compress("res/fibonacci.txt", "res/fibonacci.huff");
-//    decompress("res/fibonacci.huff", "res/fibonacci_d.txt");
+
+//    compress("res/ababcab.txt", "res/out.huff");
+//    decompress("res/out.huff", "res/decomp.txt");
+
+//    compress("res/moo.wav", "res/moo.huff");
+//    decompress("res/moo.huff", "res/moo_d.wav");
+
+//    compress("res/excellent.wav", "res/excellent.huff");
+//    decompress("res/excellent.huff", "res/excellent_d.wav");
+
 //    compress("res/dictionary.txt", "res/dictionary.huff");
 //    decompress("res/dictionary.huff", "res/d_dictionary.txt");
-//    compress("res/hellokitty.bmp", "res/hello.huff");
-//    decompress("res/hello.huff", "res/d_hellokitty.bmp");
+
+    compress("res/tomsawyer.txt", "res/tomsawyer.huff");
+    decompress("res/tomsawyer.huff", "res/d_tomsawyer.txt");
+
+//    compress("res/iconstrip.png", "res/iconstrip.huff");
+//    decompress("res/iconstrip.huff", "res/d_iconstrip.png");
+
 //    compress("res/dictionary.txt", "res/dictionary.huff");
    // compress("res/bender.jpg", "res/bender.huff");
 

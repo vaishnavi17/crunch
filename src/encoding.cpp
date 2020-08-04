@@ -68,6 +68,13 @@ vector<bool> convertInts(int size, int seq) {
     return arr;
 }
 
+int codeToPos(vector<bool>& code) {
+    int pos = 0;
+    for (bool i : code) {
+        pos = (pos<<1) + (i ? 2 : 1);
+    }
+    return pos;
+}
 void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vector<bool>> &encodingMap) {
     if (Tree->isLeaf()) {
         auto c = convertInts(size, seq);
@@ -101,7 +108,6 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& e
  {
      ifstream inp;
      inp.open(input_file, ios::in);
-//   print_state(inp);
      HuffmanNode* tree = buildEncodingTree(buildFrequencyTable(inp));
      auto encodingMap = buildEncodingMap(tree);
 
@@ -128,11 +134,10 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& e
 
  void decompress(string input_file, string output_file)
  {
-
      chunkreader inp = chunkreader(input_file);
      unsigned char num = inp.getChar(8);
      cout << "size: " << +num << endl;
-     unordered_map<unsigned char, vector<bool>> encodingMap;
+     unordered_map<int, unsigned char> encodingMap;
      char character;
      unsigned char size = 0;
      vector<bool> code;
@@ -140,16 +145,26 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& e
          character = inp.getChar(8);
          size = inp.getChar(8);
          code = inp.get(size);
-         encodingMap[character] = code;
+         int pos = codeToPos(code);
+         encodingMap[pos] = character;
      }
 
-     for (auto i : encodingMap) {
-         cout << i.first << '\n' << tostr(i.second) << "\n\n";
+     ofstream out;
+     out.open(output_file, ios::out);
+
+     int curr = 0;
+     unsigned char decoded;
+     while (inp.hasLeft()) {
+         curr<<=1;
+         curr += (inp.getBit() ? 2 : 1);
+         auto decoded = encodingMap.find(curr);
+         if (decoded != encodingMap.end()) {
+             out.put(encodingMap[curr]);
+             curr = 0;
+         }
      }
+     out.close();
      inp.close();
-//     ofstream out;
-//     out.open(output_file);
-
  }
 
 void freeTree(HuffmanNode *node)
