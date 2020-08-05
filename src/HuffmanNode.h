@@ -28,7 +28,7 @@
  */
 struct HuffmanNode
 {
-    unsigned char character;     // character being represented by this node
+    short character;     // character being represented by this node
     int count;         // number of occurrences of that character
     HuffmanNode *zero; // 0 (left) subtree (NULL if empty)
     HuffmanNode *one;  // 1 (right) subtree (NULL if empty)
@@ -37,7 +37,7 @@ struct HuffmanNode
      * Constructs a new node to store the given character and its count,
      * along with the given child pointers.
      */
-    HuffmanNode(unsigned char character = ' ', int count = 0,
+    HuffmanNode(short character, int count = 0,
                 HuffmanNode *zero = NULL, HuffmanNode *one = NULL);
 
     /*

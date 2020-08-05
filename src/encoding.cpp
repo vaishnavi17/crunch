@@ -27,7 +27,6 @@ unordered_map<unsigned char, int> buildFrequencyTable(istream &input)
         else
             freqTable[c] = 1;
     }
-    freqTable[EOF] = 1;
     return freqTable;
 }
 
@@ -39,6 +38,7 @@ HuffmanNode *buildEncodingTree(const unordered_map<unsigned char, int> &freqTabl
         HuffmanNode* temp = new HuffmanNode(node.first, node.second, NULL, NULL);
         pq.push(temp);
     }
+    pq.push(new HuffmanNode(-1, 1, NULL, NULL));
     if (pq.empty()) return NULL;
     while (pq.size()>1) {
         HuffmanNode* t1 = pq.top();
@@ -68,14 +68,14 @@ vector<bool> convertInts(int size, int seq) {
     return arr;
 }
 
-int codeToPos(vector<bool>& code) {
-    int pos = 0;
+long long codeToPos(vector<bool>& code) {
+    long long pos = 0;
     for (bool i : code) {
         pos = (pos<<1) + (i ? 2 : 1);
     }
     return pos;
 }
-void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vector<bool>> &encodingMap) {
+void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<short, vector<bool>> &encodingMap) {
     if (Tree->isLeaf()) {
         auto c = convertInts(size, seq);
         encodingMap[Tree->character] = c;
@@ -86,17 +86,17 @@ void dfs(HuffmanNode *Tree, int size, int seq, unordered_map<unsigned char, vect
     }
 }
 
-unordered_map<unsigned char, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree)
+unordered_map<short, vector<bool>> buildEncodingMap(HuffmanNode *encodingTree)
 {
-    unordered_map<unsigned char, vector<bool>> encodingMap;
+    unordered_map<short, vector<bool>> encodingMap;
     dfs(encodingTree, 0, 0, encodingMap);
     return encodingMap;
 }
 
-void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& encodingMap) {
-    out.pushByte(encodingMap.size()-1);
+void writeHeader(chunkwriter& out, unordered_map<short, vector<bool>>& encodingMap) {
+    out.pushByte(encodingMap.size()-2);
     for (auto i : encodingMap) {
-        if (i.first != 255) {
+        if (i.first != -1) {
             out.pushByte(i.first);
             out.pushByte(i.second.size());
             out.push(i.second);
@@ -110,10 +110,6 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& e
      inp.open(input_file, ios::in);
      HuffmanNode* tree = buildEncodingTree(buildFrequencyTable(inp));
      auto encodingMap = buildEncodingMap(tree);
-
-     for (auto i : encodingMap) {
-         cout << i.first << ' ' << tostr(i.second) << '\n';
-     }
      inp.close();
 
      chunkwriter out = chunkwriter(output_file);
@@ -125,7 +121,7 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& e
          c = inp.get();
          out.push(encodingMap.at(c));
      }
-     out.push(encodingMap.at(EOF));
+     out.push(encodingMap.at(-1));
      inp.close();
      out.close();
      freeTree(tree);
@@ -137,22 +133,22 @@ void writeHeader(chunkwriter& out, unordered_map<unsigned char, vector<bool>>& e
      chunkreader inp = chunkreader(input_file);
      unsigned char num = inp.getChar(8);
      cout << "size: " << +num << endl;
-     unordered_map<int, unsigned char> encodingMap;
+     unordered_map<long long, unsigned char> encodingMap;
      char character;
      unsigned char size = 0;
      vector<bool> code;
-     for (int i = 0; i < num; i++) {
+     for (int i = 0; i < num+1; i++) {
          character = inp.getChar(8);
          size = inp.getChar(8);
          code = inp.get(size);
-         int pos = codeToPos(code);
+         long long pos = codeToPos(code);
          encodingMap[pos] = character;
      }
 
      ofstream out;
      out.open(output_file, ios::out);
 
-     int curr = 0;
+     long long curr = 0;
      unsigned char decoded;
      while (inp.hasLeft()) {
          curr<<=1;

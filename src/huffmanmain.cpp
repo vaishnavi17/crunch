@@ -41,11 +41,17 @@ int main() {
 //    compress("res/dictionary.txt", "res/dictionary.huff");
 //    decompress("res/dictionary.huff", "res/d_dictionary.txt");
 
-    compress("res/tomsawyer.txt", "res/tomsawyer.huff");
-    decompress("res/tomsawyer.huff", "res/d_tomsawyer.txt");
+//    compress("res/empty.txt", "res/empty.huff");
+//    decompress("res/empty.huff", "res/empty_d.txt");
 
-//    compress("res/iconstrip.png", "res/iconstrip.huff");
-//    decompress("res/iconstrip.huff", "res/d_iconstrip.png");
+//    compress("res/tomsawyer.txt", "res/tomsawyer.huff");
+//    decompress("res/tomsawyer.huff", "res/d_tomsawyer.txt");
+
+//    compress("res/allcharsonce.dat", "res/allcharsonce.huff");
+//    decompress("res/allcharsonce.huff", "res/allcharsonce_d.dat");
+
+    compress("res/hellokitty.bmp", "res/hellokitty.huff");
+    decompress("res/hellokitty.huff", "res/hellokitty_d.bmp");
 
 //    compress("res/dictionary.txt", "res/dictionary.huff");
    // compress("res/bender.jpg", "res/bender.huff");
