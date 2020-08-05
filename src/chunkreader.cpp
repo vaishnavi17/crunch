@@ -17,9 +17,7 @@ vector<bool> chunkreader::get(int n) {
         if (left == 0) {
             char temp;
             in.get(temp);
-            int t = temp;
-            if (temp < 0) t = 256 + temp;
-            primary_buffer = (unsigned char) t;
+            primary_buffer = (unsigned char) temp;
             left = 8;
         }
 
