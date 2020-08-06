@@ -44,23 +44,7 @@ struct HuffmanNode
      * Returns true if this node is a leaf (has NULL children).
      */
     bool isLeaf() const;
-
-    /*
-     * Returns a string representation of this node for debugging.
-     */
-    std::string toString() const;
 };
 
-/*
- * Prints an indented horizontal view of the tree of HuffmanNodes with the given
- * node as its root.
- * Can optionally show the memory addresses of each node for debugging.
- */
-void printSideways(HuffmanNode *node, bool showAddresses = false, std::string indent = "");
-
-/*
- * Stream insertion operator so that a HuffmanNode can be printed for debugging.
- */
-std::ostream &operator<<(std::ostream &out, const HuffmanNode &node);
 
 #endif
