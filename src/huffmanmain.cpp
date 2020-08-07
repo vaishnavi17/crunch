@@ -14,6 +14,11 @@ using namespace std;
 
 int main(int argc, char **argv) {
     string invalid = "You have entered an invalid command. Try using --help for instructions.\n\n";
+    string help = "Welcome to Crunch!\n\nTo compress or decompress a file, use this format:\n[compression method tag]"
+                  " [compress/decompress tag] [input file path] [output file path]\n Compression method tags: Use "
+                  "--huffman for Huffman Coding, and --lzw for the LZW algorithm.\n"
+                  "Compress/decompress tags: Use --c or --compress to compress, and --d or --decompress to decompress.\n\n"
+                  "To quit Crunch, use --q or --quit.\n\nTo display this help menu again, use --help.\n\n";
     bool quit = false;
     if (argc == 2 && (strcmp(argv[1], "--quit")==0 || strcmp(argv[1], "--q")==0)) quit = true;
     else if (argc == 5) {
@@ -27,11 +32,7 @@ int main(int argc, char **argv) {
             } else cout << invalid;
         } else cout << invalid;
     } else if (argc == 2 && strcmp(argv[1], "--help") == 0) {
-        cout << "Welcome to Crunch!\n\nTo compress or decompress a file, use this format:\n[compression method tag]"
-                " [compress/decompress tag] [input file path] [output file path]\n Compression method tags: Use "
-                "--huffman for Huffman Coding, and --lzw for the LZW algorithm.\n"
-                "Compress/decompress tags: Use --c or --compress to compress, and --d or --decompress to decompress.\n\n"
-                "To quit Crunch, use --q or --quit.\n\nTo display this help menu again, use --help.";
+        cout << help;
     } else cout << invalid;
 
     string command;
@@ -54,12 +55,7 @@ int main(int argc, char **argv) {
                 } else cout << invalid;
             } else cout << invalid;
         } else if (tokens.size() == 1 && tokens[0] == "--help") {
-            cout << "Welcome to Crunch!\n\nTo compress or decompress a file, use this format:\n[compression method tag]"
-                    " [compress/decompress tag] [input file path] [output file path]\n\nCompression method tags: Use "
-                    "--huffman for Huffman Coding, and --lzw for the LZW algorithm.\n"
-                    "Compress/decompress tags: Use --c or --compress to compress, and --d or --decompress to decompress.\n\n"
-                    "To quit Crunch, use --q or --quit.\n\n To display this help menu again, use --help.";
+            cout << help;
         } else cout << invalid;
     }
-
 }

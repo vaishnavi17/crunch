@@ -13,15 +13,13 @@ chunkwriter::chunkwriter(string output_file) {
 
 
 void chunkwriter::push(vector<bool> &code) {
-//    cout << "push called" << '\n';
     int n = code.size();
     unsigned char mask = 0;
 
     for (int i = 0; i < min(n, space); i++) {
         mask = (mask << 1) + (code[i] ? 1 : 0);
     }
-//    cout << "space left " << space << '\n';
-//    cout << "mask " << +mask << '\n';
+
     int done;
     if (n >= space) {
         done = space;
@@ -34,21 +32,17 @@ void chunkwriter::push(vector<bool> &code) {
         space -= n;
     }
 
-//    cout << "done " << done << '\n' << "n " << n << '\n';
     while (done < n) {
-//        cout << "done is less than n" << '\n';
         mask = 0;
         for (int j = done ; j < min(done + 8, n); j++) {
             mask = (mask << 1) + (code[j] ? 1 : 0);
         }
-//        cout << "mask " << +mask << '\n';
         if (done + 8 <= n) {
             out.put(mask);
         }
         else {
             primary_buffer += mask << (8 + done - n);
             space -= (n - done);
-//            cout << "primary buff " << +primary_buffer << '\n';
         }
         done +=8;
     }
