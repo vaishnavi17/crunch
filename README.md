@@ -16,7 +16,7 @@ cmake ..
 #running make builds the project and generates an executable called crunch
 make
 cd ..
-#you can run this executable and supply it with command line arguments
+#now you can run this executable and supply it with command line arguments
 build/crunch [command]
 ```
 
@@ -34,7 +34,7 @@ To see the help menu, use the command `--help`.
 To quit, use `--quit` or `--q`.
 
 
-The `res` folder has a lot of example files that can be used (taken from Stanford's CS 106X course). For example, you can try out:
+The `res` folder has a lot of example files that can be used (taken from Stanford's CS 106X course). Here's some commands you can try out:
 
 `--huffman --c res/moo.wav res/moo.huff`
 `--huffman --d res/moo.huff res/moo_decompressed.wav`
