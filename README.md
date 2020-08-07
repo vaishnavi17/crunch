@@ -31,3 +31,9 @@ For compress/decompress tags, use `--compress` or `--c` to compress a file, and 
 
 To see the help menu, use the command `--help`.
 To quit, use `--quit` or `--q`.
+
+
+The `res` folder has a lot of example files that can be used (taken from Stanford's CS 106X course). For example, you can try out:
+
+`--huffman --c res/moo.wav res/moo.huff`
+`--huffman --d res/moo.huff res/moo_decompressed.wav`
