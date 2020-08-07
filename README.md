@@ -37,4 +37,5 @@ To quit, use `--quit` or `--q`.
 The `res` folder has a lot of example files that can be used (taken from Stanford's CS 106X course). Here's some commands you can try out:
 
 `--huffman --c res/moo.wav res/moo.huff`
+
 `--huffman --d res/moo.huff res/moo_decompressed.wav`
