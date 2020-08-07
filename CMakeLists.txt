@@ -11,6 +11,5 @@ add_executable(crunch
         src/encoding.h
         src/HuffmanNode.cpp
         src/HuffmanNode.h
-        src/huffmanutil.cpp
-        src/huffmanutil.h src/chunkwriter.cpp src/chunkwriter.h
+        src/chunkwriter.cpp src/chunkwriter.h
         src/chunkreader.cpp src/chunkreader.h)

@@ -1,13 +1,9 @@
 #include <algorithm>
-#include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
 
-#include "HuffmanNode.h"
 #include "encoding.h"
 #include <vector>
-#include "huffmanutil.h"
 
 using namespace std;
 

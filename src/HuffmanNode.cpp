@@ -13,7 +13,6 @@
 
 #include <cctype>
 #include "HuffmanNode.h"
-#include "huffmanutil.h"
 using namespace std;
 
 static void printHuffmanNode(ostream& out, const HuffmanNode& node, bool showAddress = false);
