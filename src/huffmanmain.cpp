@@ -15,7 +15,7 @@ using namespace std;
 int main(int argc, char **argv) {
     string invalid = "You have entered an invalid command. Try using --help for instructions.\n\n";
     string help = "Welcome to Crunch!\n\nTo compress or decompress a file, use this format:\n[compression method tag]"
-                  " [compress/decompress tag] [input file path] [output file path]\n Compression method tags: Use "
+                  " [compress/decompress tag] [input file path] [output file path]\n\nCompression method tags: Use "
                   "--huffman for Huffman Coding, and --lzw for the LZW algorithm.\n"
                   "Compress/decompress tags: Use --c or --compress to compress, and --d or --decompress to decompress.\n\n"
                   "To quit Crunch, use --q or --quit.\n\nTo display this help menu again, use --help.\n\n";
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
         copy(istream_iterator<string>(iss),
              istream_iterator<string>(),
              back_inserter(tokens));
-        if (tokens.size() == 1 && tokens[0] == "--quit") break;
+        if (tokens.size() == 1 && (tokens[0] == "--quit" || tokens[0] == "--q")) break;
         else if (tokens.size() == 4) {
             if (tokens[0] == "--huffman") {
                 if (tokens[1] == "--c" || tokens[1] == "--compress") {
