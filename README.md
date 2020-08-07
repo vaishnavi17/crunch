@@ -30,6 +30,7 @@ For compress/decompress tags, use `--compress` or `--c` to compress a file, and 
 
 
 To see the help menu, use the command `--help`.
+
 To quit, use `--quit` or `--q`.
 
 
